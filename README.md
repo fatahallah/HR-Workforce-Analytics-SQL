@@ -1,4 +1,4 @@
-# HR Workforce Analytics — SQL Project (Al Noor HR Data, Phase 2)
+# HR Workforce Analytics — SQL & Power BI Project (Al Noor HR Data, Phase 2)
 
 ## Overview
 This project extends the earlier **Al Noor HR Operations & Payroll Analytics System** (Excel/Power Query) into SQL, using a relational Human Resources Data Set to practice querying, joining, and analyzing multi-table employee data. It focuses on headcount composition, attrition, undocumented action codes, and performance ranking.
@@ -17,6 +17,7 @@ A synthetic Human Resources Data Set consisting of three related tables, linked 
 ## Tools
 - **DB Browser for SQLite** — database creation, CSV import, and query execution
 - **SQL** — data validation, joins, self-joins, CTEs, window functions
+- **Power BI Desktop** — connected to the SQLite database via an ODBC driver, DAX measures, and interactive dashboard design
 
 ## Methodology
 1. **Data Validation** — checked for duplicate keys, missing values, and verified categorical value ranges across all three tables.
@@ -34,8 +35,26 @@ A synthetic Human Resources Data Set consisting of three related tables, linked 
 - **Manager span of control:** 266 managers across the company, with team sizes tightly clustered (many at exactly 6 direct reports), suggesting a deliberately balanced synthetic dataset rather than an organic org structure.
 - **Performance ranking:** using `RANK() OVER (PARTITION BY DepID ORDER BY Rating DESC)`, employees were ranked within their department based on their most recent rating, correctly handling ties (e.g. 8 employees tied for rank 1 in Department 1).
 
+## Dashboard (Power BI)
+The SQL analysis above was brought into an interactive two-page Power BI dashboard, connected live to the SQLite database through an ODBC driver rather than a static data export.
+
+**Page 1 — Workforce Overview**
+- KPI cards: Total Employees, Active Employees, Attrition Rate %
+- Attrition Rate % by Department (bar chart, sorted highest to lowest)
+- Employee performance ranking table, ranked within department using a DAX-based RANK measure
+- Department slicer to filter the whole page interactively
+
+**Page 2 — HR Performance & Termination Details**
+- KPI cards: Total Staff, Total Managers
+- Termination Reasons Breakdown (donut chart of the three decoded termination action codes)
+- Average Performance Rating by Department (bar chart)
+- Synced department slicer, consistent with Page 1
+
+See `HR_Workforce_Analytics_Dashboard.pdf` for a static export of both pages.
+
 ## Files
 - `HR_Data_Validation_Queries.sql` — full annotated query log, in chronological order, covering every step above.
+- `HR_Workforce_Analytics_Dashboard.pdf` — exported preview of the Power BI dashboard (both pages).
 
 ## Author
 Fathallah Saied Abou Eid
